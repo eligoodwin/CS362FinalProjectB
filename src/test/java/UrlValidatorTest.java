@@ -77,7 +77,7 @@ public class UrlValidatorTest extends TestCase {
     }
 
     //make all the components
-    public void makeAllComponents() {
+    private void makeAllComponents() {
         makeSchemeComponents();
         makeAuthorityComponents();
         makePathComponents();
@@ -137,7 +137,7 @@ public class UrlValidatorTest extends TestCase {
     public void testIsValid() {
         final int arrayLength = fragment.length;
         //You can use this function for programming based testing
-
+        makeAllComponents();
         int failCount = 0;
         int testCount = 0;
         //gross
