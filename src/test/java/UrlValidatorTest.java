@@ -1,6 +1,9 @@
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
+
+import java.beans.Transient;
 import java.net.URL;
 
 //You can use this as a skeleton for your 3 different test approach
@@ -130,7 +133,7 @@ public class UrlValidatorTest extends TestCase {
 
     }
     //You need to create more test cases for your Partitions if you need to
-
+    @Test
     public void testIsValid() {
         final int arrayLength = fragment.length;
         //You can use this function for programming based testing
