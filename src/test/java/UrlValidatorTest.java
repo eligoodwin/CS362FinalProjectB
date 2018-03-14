@@ -32,8 +32,16 @@ public class UrlValidatorTest extends TestCase {
     private URLComponent[] authority;
     private void makeAuthorityComponents(){
         authority = new URLComponent[10];
-
-
+        authority[0] = new URLComponent("bobdole:iambobdole@google.com", true);
+        authority[1] = new URLComponent("Google.com", true);
+        authority[2] = new URLComponent("Yahoo.org", true);
+        authority[3] = new URLComponent("Myspace.gov", true);
+        authority[4] = new URLComponent("Facebook.ru", true);
+        authority[5] = new URLComponent("192.126.11.01:80", true);
+        authority[6] = new URLComponent("Amazon.uk.co", true);
+        authority[7] = new URLComponent("nevergonna@giveyouup.net",false);
+        authority[8] = new URLComponent("%%^$%%.net:!!!!", false);
+        authority[9] = new URLComponent("bobdole////iambobdole@google.com", false);
     }
 
     private URLComponent[] path;
@@ -87,7 +95,6 @@ public class UrlValidatorTest extends TestCase {
         if(fragmentIndex > 0){
             testURL += fragment[fragmentIndex];
         }
-
         return testURL;
     }
 
