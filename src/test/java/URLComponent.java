@@ -2,21 +2,20 @@ public class URLComponent {
     //component
     private final String componentString;
     //valid component
-    private final boolean validity;
-
+    private final boolean valid;
 
     //constructor
     URLComponent(String componentString, boolean validity){
         this.componentString = componentString;
-        this.validity = validity;
+        this.valid = validity;
     }
 
     public String getComponentString() {
         return componentString;
     }
 
-    public boolean isValidity() {
-        return validity;
+    public boolean isValid() {
+        return valid;
     }
 
 }

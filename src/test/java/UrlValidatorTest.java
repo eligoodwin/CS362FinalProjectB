@@ -2,6 +2,7 @@
 
 import junit.framework.TestCase;
 
+import java.net.URL;
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
 // Again, it is up to you to use this file or not!
@@ -12,8 +13,86 @@ import junit.framework.TestCase;
 
 public class UrlValidatorTest extends TestCase {
 
+    // /components of the url
+    private URLComponent[] scheme;
+    private void makeSchemeComponents(){
+        scheme = new URLComponent[10];
+        scheme[0] = new URLComponent("HTTP", true);
+        scheme[1] = new URLComponent("https", true);
+        scheme[2] = new URLComponent("ftp", true);
+        scheme[3] = new URLComponent("mailto", true);
+        scheme[4] = new URLComponent("file", true);
+        scheme[5] = new URLComponent("data", true);
+        scheme[6] = new URLComponent("irc", true);
+        scheme[7] = new URLComponent("+http", true);
+        scheme[8] = new URLComponent("1ftp", false);
+        scheme[9] = new URLComponent("ht*tp", false);
+    }
 
-   public UrlValidatorTest(String testName) {
+    private URLComponent[] authority;
+    private void makeAuthorityComponents(){
+        authority = new URLComponent[10];
+
+
+    }
+
+    private URLComponent[] path;
+    private void makePathComponents() {
+        path = new URLComponent[10];
+        path[0] = new URLComponent("", true);
+    }
+
+    private URLComponent[] query;
+    private void makeQueryComponents(){
+        query = new URLComponent[10];
+        query[0] = new URLComponent("", true);
+
+    }
+
+    private URLComponent[] fragment;
+    private void makeFragmentComponent(){
+        fragment = new URLComponent[10];
+        fragment[0] = new URLComponent("", true);
+    }
+
+    //make all the components
+    public void makeAllComponents(){
+        makeSchemeComponents();
+        makeAuthorityComponents();
+        makePathComponents();
+        makeQueryComponents();
+        makeFragmentComponent();
+    }
+
+    //test if the components together make a valid url
+    public boolean validComponentCheck(int schemeIndex, int authorityIndex, int pathIndex, int queryIndex, int fragmentIndex){
+        return scheme[schemeIndex].isValid() &&
+                authority[authorityIndex].isValid() &&
+                path[pathIndex].isValid() &&
+                query[queryIndex].isValid() &&
+                fragment[fragmentIndex].isValid();
+    }
+
+
+    //construct the url string from the desired components
+    public String constructURL(int schemeIndex, int authorityIndex, int pathIndex, int queryIndex, int fragmentIndex){
+        String testURL = scheme[schemeIndex] + "://" + authority[authorityIndex] + "/";
+        //if the other indexes are not empty append them to the string
+        if(pathIndex > 0){
+            testURL += path[pathIndex];
+        }
+        if(queryIndex > 0){
+            testURL += "?" + query[queryIndex];
+        }
+        if(fragmentIndex > 0){
+            testURL += fragment[fragmentIndex];
+        }
+
+        return testURL;
+    }
+
+
+    public UrlValidatorTest(String testName) {
       super(testName);
    }
 
