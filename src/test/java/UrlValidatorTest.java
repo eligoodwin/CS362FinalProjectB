@@ -50,6 +50,15 @@ public class UrlValidatorTest extends TestCase {
     private void makePathComponents() {
         path = new URLComponent[10];
         path[0] = new URLComponent("", true);
+        path[1] = new URLComponent("questions/1547891", true);
+        path[2] = new URLComponent("wiki/Main_Page", true);
+        path[3] = new URLComponent("en/about", true);
+        path[4] = new URLComponent("groups", true);
+        path[5] = new URLComponent("Theme-Park/Tickets", true);
+        path[6] = new URLComponent("categories/13/dresses.html", true);
+        path[7] = new URLComponent("/;aasjdk@[]ahk  :;", false);
+        path[8] = new URLComponent("Hello world example here {}", false);
+        path[9] = new URLComponent("{{{}}}|||^|^", false);
     }
 
     private URLComponent[] query;
@@ -57,6 +66,15 @@ public class UrlValidatorTest extends TestCase {
     private void makeQueryComponents() {
         query = new URLComponent[10];
         query[0] = new URLComponent("", true);
+        query[1] = new URLComponent("q=stephen+hawking", true);
+        query[2] = new URLComponent("search_in_description=1&q=lace+top", true);
+        query[3] = new URLComponent("title=Hello_World", true);
+        query[4] = new URLComponent("field1=value1", true);
+        query[5] = new URLComponent("q=hello", true);
+        query[6] = new URLComponent("q=2+2", true);
+        query[7] = new URLComponent(": / @ **** [][]”” abaa ", false);
+        query[8] = new URLComponent(";search@trueValue", false);
+        query[9] = new URLComponent("/{{}}|||^^", false);
 
     }
 
@@ -135,6 +153,7 @@ public class UrlValidatorTest extends TestCase {
     //You need to create more test cases for your Partitions if you need to
     @Test
     public void testIsValid() {
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         final int arrayLength = fragment.length;
         //You can use this function for programming based testing
         makeAllComponents();
@@ -163,10 +182,10 @@ public class UrlValidatorTest extends TestCase {
             }
         }
         if(failCount == 0) {
-            System.out.printf("TOTAL TESTS: %i. ALL TESTS PASSED\n", testCount);
+            System.out.printf("TOTAL TESTS: %d. ALL TESTS PASSED\n", testCount);
         }
         else{
-            System.out.printf("TOTAL TESTS: %i. TESTS FAILED: %i\n", testCount, failCount);
+            System.out.printf("TOTAL TESTS: %d. TESTS FAILED: %d\n", testCount, failCount);
         }
     }
 }
