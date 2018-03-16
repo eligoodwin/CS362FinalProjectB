@@ -11,11 +11,11 @@ public class URLComponent {
     }
 
     public String getComponentString() {
-        return componentString;
+        return this.componentString;
     }
 
     public boolean isValid() {
-        return valid;
+        return this.valid;
     }
 
 }

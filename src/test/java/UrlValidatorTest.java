@@ -13,23 +13,23 @@ import java.net.URL;
 public class UrlValidatorTest extends TestCase {
     private UrlValidator theValidator;
     // /components of the url
-    private URLComponent[] scheme;
+    private static URLComponent[] scheme;
 
     private void makeSchemeComponents() {
         scheme = new URLComponent[10];
-        scheme[0] = new URLComponent("HTTP", true);
+        scheme[0] = new URLComponent("http", true);
         scheme[1] = new URLComponent("https", true);
         scheme[2] = new URLComponent("ftp", true);
         scheme[3] = new URLComponent("mailto", true);
         scheme[4] = new URLComponent("file", true);
         scheme[5] = new URLComponent("data", true);
         scheme[6] = new URLComponent("irc", true);
-        scheme[7] = new URLComponent("+http", true);
+        scheme[7] = new URLComponent("+http", false);
         scheme[8] = new URLComponent("1ftp", false);
         scheme[9] = new URLComponent("ht*tp", false);
     }
 
-    private URLComponent[] authority;
+    private static URLComponent[] authority;
 
     private void makeAuthorityComponents() {
         authority = new URLComponent[10];
@@ -45,7 +45,7 @@ public class UrlValidatorTest extends TestCase {
         authority[9] = new URLComponent("bobdole////iambobdole@google.com", false);
     }
 
-    private URLComponent[] path;
+    private static URLComponent[] path;
 
     private void makePathComponents() {
         path = new URLComponent[10];
@@ -61,7 +61,7 @@ public class UrlValidatorTest extends TestCase {
         path[9] = new URLComponent("{{{}}}|||^|^", false);
     }
 
-    private URLComponent[] query;
+    private static URLComponent[] query;
 
     private void makeQueryComponents() {
         query = new URLComponent[10];
@@ -78,7 +78,7 @@ public class UrlValidatorTest extends TestCase {
 
     }
 
-    private URLComponent[] fragment;
+    private static URLComponent[] fragment;
 
     private void makeFragmentComponent() {
         fragment = new URLComponent[10];
@@ -115,16 +115,16 @@ public class UrlValidatorTest extends TestCase {
 
     //construct the url string from the desired components
     public String constructURL(int schemeIndex, int authorityIndex, int pathIndex, int queryIndex, int fragmentIndex) {
-        String testURL = scheme[schemeIndex] + "://" + authority[authorityIndex] + "/";
+        String testURL = scheme[schemeIndex].getComponentString() + "://" + authority[authorityIndex].getComponentString() + "/";
         //if the other indexes are not empty append them to the string
         if (pathIndex > 0) {
-            testURL += path[pathIndex];
+            testURL += path[pathIndex].getComponentString();
         }
         if (queryIndex > 0) {
-            testURL += "?" + query[queryIndex];
+            testURL += "?" + query[queryIndex].getComponentString();
         }
         if (fragmentIndex > 0) {
-            testURL += fragment[fragmentIndex];
+            testURL += fragment[fragmentIndex].getComponentString();
         }
         return testURL;
     }
@@ -174,6 +174,7 @@ public class UrlValidatorTest extends TestCase {
                                         "\texpected validity: %b\n" +
                                         "\tobserved validity: %b\n", generatedUrl, expectedValidity, observeredValidity
                                 );
+                                System.out.printf("iteration: %d scheme: %d authority: %d path: %d query: %d fragment: %d\n", testCount, a, b, c, d, e);
                             }
                             ++testCount;
                         }
@@ -188,6 +189,53 @@ public class UrlValidatorTest extends TestCase {
             System.out.printf("TOTAL TESTS: %d. TESTS FAILED: %d\n", testCount, failCount);
         }
     }
+
+
+    public void testScheme(){
+        makeAllComponents();
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+        for(int i = 0; i < scheme.length; ++i){
+            boolean result = theValidator.isValidScheme(scheme[i].getComponentString());
+            if(result != scheme[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", scheme[i].getComponentString(), scheme[i].isValid(),result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+    }
+
+    public void testAuthority(){
+        makeAllComponents();
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+
+        for(int i = 0; i < authority.length; ++i){
+
+            String testString = authority[i].getComponentString() + "/";
+            System.out.println(testString);
+            boolean result = theValidator.isValidAuthority(testString);
+            if(result != authority[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+    }
+
+
 }
    
 
