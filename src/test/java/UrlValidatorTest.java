@@ -153,7 +153,7 @@ public class UrlValidatorTest extends TestCase {
     //You need to create more test cases for your Partitions if you need to
 
     public void testIsValid() {
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        theValidator = new UrlValidator();
         final int arrayLength = 10;
         //You can use this function for programming based testing
         makeAllComponents();
@@ -213,7 +213,7 @@ public class UrlValidatorTest extends TestCase {
 
     public void testAuthority(){
         makeAllComponents();
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        theValidator = new UrlValidator();
         int failCount = 0;
 
         for(int i = 0; i < authority.length; ++i){
