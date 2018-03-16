@@ -151,10 +151,10 @@ public class UrlValidatorTest extends TestCase {
 
     }
     //You need to create more test cases for your Partitions if you need to
-    @Test
+
     public void testIsValid() {
         theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        final int arrayLength = fragment.length;
+        final int arrayLength = 10;
         //You can use this function for programming based testing
         makeAllComponents();
         int failCount = 0;
