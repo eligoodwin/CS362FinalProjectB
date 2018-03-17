@@ -35,7 +35,7 @@ public class UrlValidatorTest extends TestCase {
         authority = new URLComponent[10];
         authority[0] = new URLComponent("bobdole:iambobdole@google.com", true);
         authority[1] = new URLComponent("Google.com", true);
-        authority[2] = new URLComponent("Yahoo.org", true);
+        authority[2] = new URLComponent("www.Yahoo.org", true);
         authority[3] = new URLComponent("Myspace.gov", true);
         authority[4] = new URLComponent("Facebook.ru", true);
         authority[5] = new URLComponent("192.126.11.01:80", true);
@@ -195,7 +195,7 @@ public class UrlValidatorTest extends TestCase {
         makeAllComponents();
         theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
-        for(int i = 0; i < scheme.length; ++i){
+        for(int i = 0; i < 10; ++i){
             boolean result = theValidator.isValidScheme(scheme[i].getComponentString());
             if(result != scheme[i].isValid()){
                 ++failCount;
@@ -213,17 +213,14 @@ public class UrlValidatorTest extends TestCase {
 
     public void testAuthority(){
         makeAllComponents();
-        theValidator = new UrlValidator();
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
-
-        for(int i = 0; i < authority.length; ++i){
-
-            String testString = authority[i].getComponentString() + "/";
-            System.out.println(testString);
-            boolean result = theValidator.isValidAuthority(testString);
+        for(int i = 0; i < 10; ++i){
+            String testString = scheme[0].getComponentString() + "://" + authority[i].getComponentString() + "/";
+            boolean result = theValidator.isValid(testString);
             if(result != authority[i].isValid()){
                 ++failCount;
-                System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
+                System.out.printf("ERROR: url: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
             }
         }
 
@@ -234,6 +231,7 @@ public class UrlValidatorTest extends TestCase {
             System.out.println("All cases passed");
         }
     }
+
 
 
 }
