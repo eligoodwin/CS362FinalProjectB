@@ -195,7 +195,7 @@ public class UrlValidatorTest extends TestCase {
         makeAllComponents();
         theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
-        for(int i = 0; i < 10; ++i){
+        for(int i = 0; i < scheme.length; ++i){
             boolean result = theValidator.isValidScheme(scheme[i].getComponentString());
             if(result != scheme[i].isValid()){
                 ++failCount;
@@ -220,7 +220,7 @@ public class UrlValidatorTest extends TestCase {
             boolean result = theValidator.isValid(testString);
             if(result != authority[i].isValid()){
                 ++failCount;
-                System.out.printf("ERROR: url: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
+                System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
             }
         }
 
@@ -232,7 +232,17 @@ public class UrlValidatorTest extends TestCase {
         }
     }
 
+    public void testAuthorityManual(){
+        makeAllComponents();
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 
+        String testString = scheme[0].getComponentString() + "://" + authority[0].getComponentString() + "/";
+        boolean result = theValidator.isValid(testString);
+        if (result != true) {
+            System.out.printf("error: %s\n", testString);
+
+        }
+    }
 
 }
 
