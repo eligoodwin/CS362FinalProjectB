@@ -40,7 +40,7 @@ public class UrlValidatorTest extends TestCase {
         authority[4] = new URLComponent("Facebook.ru", true);
         authority[5] = new URLComponent("192.126.11.01:80", true);
         authority[6] = new URLComponent("Amazon.uk.co", true);
-        authority[7] = new URLComponent("nevergonna@giveyouup.net", false);
+        authority[7] = new URLComponent("nevergonna@giveyouup", false);
         authority[8] = new URLComponent("%%^$%%.net:!!!!", false);
         authority[9] = new URLComponent("bobdole////iambobdole@google.com", false);
     }
@@ -136,7 +136,7 @@ public class UrlValidatorTest extends TestCase {
 
 
     public void testManualTest() {
-//You can use this function to implement your manual testing	   
+//You can use this function to implement your manual testing
 
     }
 
@@ -153,7 +153,7 @@ public class UrlValidatorTest extends TestCase {
     //You need to create more test cases for your Partitions if you need to
 
     public void testIsValid() {
-        theValidator = new UrlValidator();
+        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         final int arrayLength = 10;
         //You can use this function for programming based testing
         makeAllComponents();
@@ -237,7 +237,7 @@ public class UrlValidatorTest extends TestCase {
 
 
 }
-   
+
 
 
 
