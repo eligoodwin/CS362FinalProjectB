@@ -136,23 +136,6 @@ public class UrlValidatorTest extends TestCase {
     }
 
 
-    public void testManualTest() {
-//You can use this function to implement your manual testing
-
-    }
-
-
-    public void testYourFirstPartition() {
-        //You can use this function to implement your First Partition testing
-
-    }
-
-    public void testYourSecondPartition() {
-        //You can use this function to implement your Second Partition testing
-
-    }
-    //You need to create more test cases for your Partitions if you need to
-
     public void testIsValid() {
         theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
         final int arrayLength = 10;
@@ -301,8 +284,6 @@ public class UrlValidatorTest extends TestCase {
 
         }
     }
-
-
 
 }
 
