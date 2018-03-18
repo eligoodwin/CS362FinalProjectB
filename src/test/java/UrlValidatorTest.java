@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.beans.Transient;
 import java.net.URL;
+import java.util.regex.Matcher;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -191,7 +192,7 @@ public class UrlValidatorTest extends TestCase {
     }
 
 
-    public void testScheme(){
+    public void testUnitScheme(){
         makeAllComponents();
         theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
@@ -211,7 +212,7 @@ public class UrlValidatorTest extends TestCase {
         }
     }
 
-    public void testAuthority(){
+    public void testUnitAuthority(){
         makeAllComponents();
         theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
@@ -243,6 +244,8 @@ public class UrlValidatorTest extends TestCase {
 
         }
     }
+
+
 
 }
 
