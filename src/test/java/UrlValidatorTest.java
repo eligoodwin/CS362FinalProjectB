@@ -154,7 +154,7 @@ public class UrlValidatorTest extends TestCase {
     //You need to create more test cases for your Partitions if you need to
 
     public void testIsValid() {
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
         final int arrayLength = 10;
         //You can use this function for programming based testing
         makeAllComponents();
@@ -192,9 +192,31 @@ public class UrlValidatorTest extends TestCase {
     }
 
 
+    public void testUnitSchemeWithFullUrl(){
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+        for(int i = 0; i < scheme.length; ++i){
+            //make url to test
+            String testUrl = scheme[i].getComponentString() + "://" + authority[1].getComponentString();
+            boolean result = theValidator.isValidAuthority(testUrl);
+            if(result != scheme[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: url: %s scheme: %s expected: %b observed: %b\n", testUrl, scheme[i].getComponentString(), scheme[i].isValid(),result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+
+    }
     public void testUnitScheme(){
         makeAllComponents();
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
         for(int i = 0; i < scheme.length; ++i){
             boolean result = theValidator.isValidScheme(scheme[i].getComponentString());
@@ -212,16 +234,19 @@ public class UrlValidatorTest extends TestCase {
         }
     }
 
-    public void testUnitAuthority(){
+    public void testUnitAuthorityWithFullUrl(){
         makeAllComponents();
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        //theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+
         int failCount = 0;
         for(int i = 0; i < 10; ++i){
             String testString = scheme[0].getComponentString() + "://" + authority[i].getComponentString() + "/";
+            //boolean result = theValidator.isValidAuthority(authority[i].getComponentString());
             boolean result = theValidator.isValid(testString);
             if(result != authority[i].isValid()){
                 ++failCount;
-                System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
+                System.out.printf("ERROR: authority: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
             }
         }
 
@@ -233,10 +258,42 @@ public class UrlValidatorTest extends TestCase {
         }
     }
 
+    public void testUnitAuthority(){
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+
+        int failCount = 0;
+        for(int i = 0; i < 10; ++i){
+            //boolean result = theValidator.isValidAuthority(authority[i].getComponentString());
+            boolean result = theValidator.isValidAuthority(authority[i].getComponentString());
+            if(result != authority[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: authority: %s expected: %b observed: %b\n", authority[i].getComponentString(), authority[i].isValid(), result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+    }
+
+    public void testSchemeManual(){
+        int schemeNumber = 0;
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        String testString = scheme[schemeNumber].getComponentString() + "://" + "www.google.com";
+        boolean result = theValidator.isValidAuthority(testString);
+        if(result != true){
+            System.out.printf("ERROR: %s\n", testString);
+        }
+    }
+
     public void testAuthorityManual(){
         makeAllComponents();
-        theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
         String testString = scheme[0].getComponentString() + "://" + authority[0].getComponentString() + "/";
         boolean result = theValidator.isValid(testString);
         if (result != true) {
