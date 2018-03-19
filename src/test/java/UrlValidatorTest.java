@@ -224,7 +224,7 @@ public class UrlValidatorTest extends TestCase {
         theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
         int failCount = 0;
         for(int i = 0; i < query.length; ++i){
-            boolean result = theValidator.isValidScheme(query[i].getComponentString());
+            boolean result = theValidator.isValidQuery(query[i].getComponentString());
             if(result != query[i].isValid()){
                 ++failCount;
                 System.out.printf("ERROR: query: %s expected: %b observed: %b\n", query[i].getComponentString(), query[i].isValid(),result);
@@ -238,6 +238,49 @@ public class UrlValidatorTest extends TestCase {
             System.out.println("All cases passed");
         }
     }
+
+    public void testUnitPath(){
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+        for(int i = 0; i < query.length; ++i){
+            boolean result = theValidator.isValidPath(path[i].getComponentString());
+            if(result != path[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: path: %s expected: %b observed: %b\n", path[i].getComponentString(), path[i].isValid(),result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+    }
+
+    public void testUnitFragment(){
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+        for(int i = 0; i < fragment.length; ++i){
+            boolean result = theValidator.isValidFragment(fragment[i].getComponentString());
+            if(result != fragment[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: fragment: %s expected: %b observed: %b\n", fragment[i].getComponentString(), fragment[i].isValid(),result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+
+    }
+
+
 
     public void testUnitAuthorityWithFullUrl(){
         makeAllComponents();
