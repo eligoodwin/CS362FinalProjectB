@@ -351,7 +351,17 @@ public class UrlValidatorTest extends TestCase {
         }
     }
     
-    public static void testOptionsManual()
+    public void testFragmentManual(){
+    	makeFragmentComponents();
+    	UrlValidator validator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+    	for(int i = 0; i < fragments.length; i++)
+    	{
+    		System.out.print(fragment[i].componentString + ": ");
+    		System.out.println(validator.isValidFragment(fragment[i].componentString));
+    	}
+    }
+    
+    public void testOptionsManual()
 	{
 		
 		
