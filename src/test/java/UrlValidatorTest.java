@@ -350,6 +350,59 @@ public class UrlValidatorTest extends TestCase {
 
         }
     }
+    
+    public void testFragmentManual(){
+    	makeFragmentComponents();
+    	UrlValidator validator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+    	for(int i = 0; i < fragments.length; i++)
+    	{
+    		System.out.print(fragment[i].componentString + ": ");
+    		System.out.println(validator.isValidFragment(fragment[i].componentString));
+    	}
+    }
+    
+    public void testOptionsManual()
+	{
+		
+		
+		UrlValidator validator1 = new UrlValidator();
+		UrlValidator validator2 = new UrlValidator((long)UrlValidator.ALLOW_2_SLASHES);
+		UrlValidator validator3 = new UrlValidator((long)(UrlValidator.NO_FRAGMENTS + UrlValidator.ALLOW_ALL_SCHEMES));
+		UrlValidator validator4 = new UrlValidator((long)(UrlValidator.ALLOW_2_SLASHES + UrlValidator.NO_FRAGMENTS));
+		UrlValidator validator5 = new UrlValidator((long)UrlValidator.ALLOW_LOCAL_URLS);
+		UrlValidator validator6 = new UrlValidator((long)(UrlValidator.ALLOW_ALL_SCHEMES + UrlValidator.ALLOW_2_SLASHES));
+		UrlValidator validator7 = new UrlValidator((long)(UrlValidator.ALLOW_ALL_SCHEMES + UrlValidator.NO_FRAGMENTS + UrlValidator.ALLOW_2_SLASHES));
+		UrlValidator validator8 = new UrlValidator(null);
+		UrlValidator validator9 = new UrlValidator((long)UrlValidator.NO_FRAGMENTS);
+		
+		
+		UrlValidator[] validators = {validator1, validator2, validator3, validator4, validator5, validator6, validator7, validator8, validator9};
+		String[] testCases = {"http://www.google.com", 
+							"http://www.oregonstate.edu",
+							"http://www.jobit.org",
+							"http://www.oregonstate.edu/index.html",
+							"http://www.flobit.com/spore.json#ragnak",
+							"http://www.chanderpass.edu/?eat=food&meat=good",
+							//"ftp://chaunderpass:doggie41@files.microsoft.com",
+							"http://www.gibbers.com/jeepers.html",
+							"http://bobdole:iambobdole@google.com/",
+							"255.255.0.0"};
+		
+		for(int i = 0; i < validators.length; i++)
+		{
+			System.out.print("validator");
+			System.out.print((i + 1));
+			System.out.print("\n");
+			for(int j = 0; j < testCases.length; j++)
+			{
+				System.out.print("\t");
+				System.out.print(testCases[j]);
+				System.out.print(": ");
+				System.out.print(validators[i].isValid(testCases[j]));
+				System.out.print("\n");
+			}
+		}
+	}
 
 }
 
