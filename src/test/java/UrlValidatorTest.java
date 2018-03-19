@@ -197,6 +197,8 @@ public class UrlValidatorTest extends TestCase {
         }
 
     }
+
+
     public void testUnitScheme(){
         makeAllComponents();
         theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
@@ -206,6 +208,26 @@ public class UrlValidatorTest extends TestCase {
             if(result != scheme[i].isValid()){
                 ++failCount;
                 System.out.printf("ERROR: scheme: %s expected: %b observed: %b\n", scheme[i].getComponentString(), scheme[i].isValid(),result);
+            }
+        }
+
+        if(failCount > 0){
+            System.out.printf("ERROR COUNT: %d", failCount);
+        }
+        else{
+            System.out.println("All cases passed");
+        }
+    }
+
+    public void testUnitQuery(){
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        int failCount = 0;
+        for(int i = 0; i < query.length; ++i){
+            boolean result = theValidator.isValidScheme(query[i].getComponentString());
+            if(result != query[i].isValid()){
+                ++failCount;
+                System.out.printf("ERROR: query: %s expected: %b observed: %b\n", query[i].getComponentString(), query[i].isValid(),result);
             }
         }
 
@@ -275,9 +297,10 @@ public class UrlValidatorTest extends TestCase {
     }
 
     public void testAuthorityManual(){
+        int authorityNumber = 0;
         makeAllComponents();
         theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
-        String testString = scheme[0].getComponentString() + "://" + authority[0].getComponentString() + "/";
+        String testString = scheme[0].getComponentString() + "://" + authority[authorityNumber].getComponentString() + "/";
         boolean result = theValidator.isValid(testString);
         if (result != true) {
             System.out.printf("error: %s\n", testString);
