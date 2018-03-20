@@ -281,16 +281,13 @@ public class UrlValidatorTest extends TestCase {
     }
 
 
-
     public void testUnitAuthorityWithFullUrl(){
         makeAllComponents();
         //theValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
-
         int failCount = 0;
         for(int i = 0; i < 10; ++i){
             String testString = scheme[0].getComponentString() + "://" + authority[i].getComponentString() + "/";
-            //boolean result = theValidator.isValidAuthority(authority[i].getComponentString());
             boolean result = theValidator.isValid(testString);
             if(result != authority[i].isValid()){
                 ++failCount;
@@ -378,12 +375,12 @@ public class UrlValidatorTest extends TestCase {
     
     
     public void testFragmentManual(){
-    	makeFragmentComponents();
+        makeAllComponents();
     	UrlValidator validator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
-    	for(int i = 0; i < fragments.length; i++)
+    	for(int i = 0; i < fragment.length; i++)
     	{
-    		System.out.print(fragment[i].componentString + ": ");
-    		System.out.println(validator.isValidFragment(fragment[i].componentString));
+    		System.out.print(fragment[i].getComponentString() + ": ");
+    		System.out.println(validator.isValidFragment(fragment[i].getComponentString()));
     	}
     }
     
