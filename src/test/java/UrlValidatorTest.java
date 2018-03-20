@@ -74,7 +74,7 @@ public class UrlValidatorTest extends TestCase {
         query[5] = new URLComponent("q=hello", true);
         query[6] = new URLComponent("q=2+2", true);
         query[7] = new URLComponent(": / @ **** [][]”” abaa ", false);
-        query[8] = new URLComponent(";search@trueValue", false);
+        query[8] = new URLComponent(";search@ ? : / @ **** [][]”” abaa trueValue ", false);
         query[9] = new URLComponent("/{{}}|||^^", false);
 
     }
@@ -350,6 +350,32 @@ public class UrlValidatorTest extends TestCase {
 
         }
     }
+
+    public void testPathManual(){
+        int pathNumber = 0;
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        String testString = scheme[0].getComponentString() + "://" + authority[0].getComponentString() + "/" + path[pathNumber].getComponentString();
+        boolean result = theValidator.isValid(testString);
+        if (result != true) {
+            System.out.printf("error: %s\n", testString);
+            
+        }
+    }
+    
+    
+    public void testQueryManual(){
+        int queryNumber = 0;
+        makeAllComponents();
+        theValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+        String testString = scheme[0].getComponentString() + "://" + authority[0].getComponentString() + "/" + path[0].getComponentString() + "/?" + query[queryNumber].getComponentString();
+        boolean result = theValidator.isValid(testString);
+        if (result != true) {
+            System.out.printf("error: %s\n", testString);
+            
+        }
+    }
+    
     
     public void testFragmentManual(){
     	makeFragmentComponents();
